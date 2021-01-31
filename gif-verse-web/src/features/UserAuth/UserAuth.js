@@ -11,6 +11,7 @@ const RowWrapper = styled(Row)`
   background-image: url('https://cutewallpaper.org/21/js-wallpaper/Jay-Welborn-Beginning-React.jpg');
   height: 100vh;
   position: relative;
+  background-size: cover;
 
   .login-content {
     width: 60rem;

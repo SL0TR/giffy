@@ -18,5 +18,8 @@
   "Dashboard": "Dashboard",
   "Settings": "Settings",
   "Logout": "Logout",
-  "Successfully logged in!": "Successfully logged in!"
+  "Successfully logged in!": "Successfully logged in!",
+  "Click or drag file to this area to upload": "Click or drag file to this area to upload",
+  "Convert to GIF": "Convert to GIF",
+  "FFMPEG wasm is loading...": "FFMPEG wasm is loading..."
 }
