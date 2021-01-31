@@ -11,4 +11,5 @@ export const PRIVATE_ROUTE = {
   DASHBOARD: 'dashboard',
   HOME: '',
   DEMO_PAGE: 'demo',
+  VID_TO_GIF_PAGE: 'vid-to-gif',
 };

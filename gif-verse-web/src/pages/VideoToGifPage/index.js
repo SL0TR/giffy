@@ -1,10 +1,13 @@
 import React from 'react';
 import { LayoutContentWrapper, LayoutContent } from 'styles';
+import VideoToGif from 'features/VideoToGif';
 
 function DashboardHomePage() {
   return (
     <LayoutContentWrapper>
-      <LayoutContent className="shadow">Home page yo!</LayoutContent>
+      <LayoutContent className="shadow">
+        <VideoToGif />
+      </LayoutContent>
     </LayoutContentWrapper>
   );
 }

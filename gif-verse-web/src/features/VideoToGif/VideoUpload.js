@@ -35,7 +35,7 @@ function VideoUpload({ setVideo, setGif }) {
           <InboxOutlined />
         </p>
         <p className="ant-upload-text">
-          <FormattedMessage id="Click or drag file to this area to upload" />
+          <FormattedMessage id="Click or drag file to this area to convert video to GIF" />
         </p>
       </Dragger>
     </Col>

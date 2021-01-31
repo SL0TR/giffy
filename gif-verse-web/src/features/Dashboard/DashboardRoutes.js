@@ -11,6 +11,11 @@ const routes = [
     component: lazy(() => import('pages/HomePage')),
     exact: true,
   },
+  {
+    path: PRIVATE_ROUTE.VID_TO_GIF_PAGE,
+    component: lazy(() => import('pages/VideoToGifPage')),
+    exact: true,
+  },
 ];
 
 export default function AppRouter() {

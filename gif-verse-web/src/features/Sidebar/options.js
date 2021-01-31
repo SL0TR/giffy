@@ -1,6 +1,6 @@
 import { PRIVATE_ROUTE } from 'router';
 import { ReactComponent as DashboardIcon } from './assets/darhboard-icon.svg';
-import { ReactComponent as BlankPage } from './assets/page.svg';
+import { ReactComponent as GifIcon } from './assets/gif.svg';
 
 const options = [
   {
@@ -10,9 +10,9 @@ const options = [
     exact: true,
   },
   {
-    key: PRIVATE_ROUTE.DEMO_PAGE,
-    LeftIcon: BlankPage,
-    label: 'Demo Page',
+    key: PRIVATE_ROUTE.VID_TO_GIF_PAGE,
+    LeftIcon: GifIcon,
+    label: 'Converter',
   },
 ];
 export default options;
