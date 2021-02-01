@@ -27,7 +27,7 @@ function VideoPlayback({ video }) {
 }
 
 VideoPlayback.propTypes = {
-  video: PropTypes.string,
+  video: PropTypes.object,
 };
 
 export default VideoPlayback;

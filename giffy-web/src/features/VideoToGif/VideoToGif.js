@@ -14,6 +14,7 @@ function VideoToGif() {
   const [video, setVideo] = useState();
   const [gif, setGif] = useState();
   const [converting, setConverting] = useState(false);
+  const [arrBuff, setArrBuff] = useState();
 
   const loadFFmpeg = async () => {
     await ffmpeg.load();
@@ -21,7 +22,6 @@ function VideoToGif() {
   };
 
   async function convertToGif() {
-    console.log(ffmpeg.isLoaded());
     setConverting(true);
     ffmpeg.FS('writeFile', video.name || 'test.mp4', await fetchFile(video));
 
@@ -40,7 +40,7 @@ function VideoToGif() {
     const url = URL.createObjectURL(
       new Blob([data.buffer], { type: 'image/gif' }),
     );
-
+    setArrBuff(data);
     setConverting(false);
     setGif(url);
     setVideo(null);
@@ -74,7 +74,7 @@ function VideoToGif() {
           </Button>
         </Col>
       )}
-      {gif && <Gif gif={gif} />}
+      {gif && <Gif gif={gif} arrBuff={arrBuff} />}
     </Row>
   );
 }

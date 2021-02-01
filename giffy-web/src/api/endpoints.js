@@ -11,3 +11,5 @@ export const testApi = 'https://jsonplaceholder.typicode.com/posts/1';
 export const loginUrl = `${authUrl}login`;
 
 export const registerUrl = `${authUrl}register`;
+
+export const gifUrl = `${apiUrl}gif`;

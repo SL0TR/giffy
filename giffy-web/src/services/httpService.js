@@ -13,7 +13,7 @@ http.interceptors.request.use(config => {
   const state = store?.getState();
 
   if (state?.Auth?.token) {
-    const token = `token ${state.Auth.token}`;
+    const token = `Bearer ${state.Auth.token}`;
     config.headers.Authorization = token;
   }
 
@@ -26,7 +26,7 @@ http.interceptors.response.use(null, error => {
     return { error };
   }
 
-  message.error('Something went wrong!');
+  message.error(error?.message || 'Something went wrong!');
 
   return { error };
 });

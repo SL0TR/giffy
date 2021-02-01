@@ -1,19 +1,34 @@
 const { StatusCodes } = require('http-status-codes');
 const Gif = require('./model');
+const fs = require('fs');
 
 async function createGif(req) {
-  const { url } = req.body;
+  const { base64 } = req.body;
 
-  const gif = {
-    url,
-    user: req?.user?._id,
-  };
+  if (base64) {
+    fs.writeFile(
+      `upload/${req?.user?._id}.gif`,
+      base64,
+      { encoding: 'base64' },
+      function (err) {
+        console.log('File created');
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  }
+
+  // const gif = {
+  //   url,
+  //   user: req?.user?._id,
+  // };
 
   try {
-    const newGif = await Gif.create(gif);
+    // const newGif = await Gif.create(gif);
     return {
       statusCode: StatusCodes.CREATED,
-      data: { gifId: newGif._id },
+      // data: { ifId: newGif._id },
     };
   } catch (e) {
     return {

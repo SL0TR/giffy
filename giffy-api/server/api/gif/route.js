@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const controller = require('./controller');
+const multer = require('multer');
+const upload = multer({ dest: 'upload/' });
 
 const authMiddleware = require('@middlewares/authMiddleware');
 
 router.post(
   '/',
   [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
+
   async function (req, res) {
+    console.log(req.file);
     const { statusCode, data } = await controller.createGif(req);
     res.status(statusCode).send(data);
   }
