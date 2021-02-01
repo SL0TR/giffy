@@ -3,9 +3,9 @@ const authUtil = require('@root/utils/authUtil');
 const { StatusCodes } = require('http-status-codes');
 
 async function createUser(user) {
-  const { email, passCode } = user;
+  const { email, password } = user;
 
-  if (!email && !passCode) {
+  if (!email && !password) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Please enter all fields' },
@@ -50,9 +50,9 @@ async function createUser(user) {
 }
 
 async function signIn(user) {
-  const { email, passCode } = user;
+  const { email, password } = user;
 
-  if (!email || !passCode) {
+  if (!email || !password) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Please enter all fields' },
@@ -69,7 +69,7 @@ async function signIn(user) {
       };
     }
 
-    if (!existingUser.authenticate(passCode)) {
+    if (!existingUser.authenticate(password)) {
       return {
         statusCode: StatusCodes.UNAUTHORIZED,
         data: { message: `Wrong Password!` },

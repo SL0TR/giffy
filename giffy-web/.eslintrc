@@ -16,7 +16,8 @@
     "camelcase": "off",
     "react/jsx-wrap-multilines": "off",
     "react/forbid-prop-types": "off",
-    "jsx-a11y/media-has-caption": "off"
+    "jsx-a11y/media-has-caption": "off",
+    "no-unused-vars": "warn"
   },
   "parser": "babel-eslint",
   "env": {

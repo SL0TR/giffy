@@ -23,5 +23,11 @@
   "Convert to GIF": "Convert to GIF",
   "FFMPEG wasm is loading...": "FFMPEG wasm is loading...",
   "Save GIF": "Save GIF",
-  "Converter": "Converter"
+  "Converter": "Converter",
+  "The two passwords that you entered do not match!": "The two passwords that you entered do not match!",
+  "Confirm Password": "Confirm Password",
+  "Don't have an account?": "Don't have an account?",
+  "Register": "Register",
+  "Successfully registered!": "Successfully registered!"
+
 }

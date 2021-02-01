@@ -8,7 +8,7 @@ const User = new Schema({
     required: true,
     unique: true,
   },
-  passCode: {
+  password: {
     type: String,
     required: true,
     minlength: 4,
@@ -19,23 +19,23 @@ const User = new Schema({
 // middleware that will run before a document
 // is created
 User.pre('save', function (next) {
-  if (!this.isModified('passCode')) return next();
-  this.passCode = this.encryptPassword(this.passCode);
+  if (!this.isModified('password')) return next();
+  this.password = this.encryptPassword(this.password);
   next();
 });
 
 User.methods = {
   // check the passwords on signin
   authenticate: function (plainTextPword) {
-    return bcrypt.compareSync(plainTextPword, this.passCode);
+    return bcrypt.compareSync(plainTextPword, this.password);
   },
   // hash the passwords
-  encryptPassword: function (plainTextPassCode) {
-    if (!plainTextPassCode) {
+  encryptPassword: function (plainTextPassWord) {
+    if (!plainTextPassWord) {
       return '';
     } else {
       const salt = bcrypt.genSaltSync(10);
-      return bcrypt.hashSync(plainTextPassCode, salt);
+      return bcrypt.hashSync(plainTextPassWord, salt);
     }
   },
 };

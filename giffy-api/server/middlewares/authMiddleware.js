@@ -6,7 +6,7 @@ function getFreshUser() {
   return function (req, res, next) {
     if (req.user && req.user.email) {
       User.findOne({ email: req.user.email })
-        .select('-passCode')
+        .select('-password')
         .then(
           function (user) {
             if (!user) {

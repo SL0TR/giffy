@@ -18,6 +18,7 @@ const AuthSlice = createSlice({
 });
 
 export const loginRequest = createAction('auth/login_request');
+export const registerRequest = createAction('auth/register_request');
 export const { login, logout } = AuthSlice.actions;
 
 export default AuthSlice;

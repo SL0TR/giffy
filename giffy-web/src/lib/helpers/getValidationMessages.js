@@ -1,18 +1,17 @@
-/* eslint-disable dot-notation */
 /* eslint-disable  no-template-curly-in-string */
 
 export default function getValidateMessages(
-  messages = {},
+  translator = {},
   inputName = 'label',
 ) {
   const validateMessages = {
-    required: `\${${inputName}} ${messages['is required!']}`,
+    required: `\${${inputName}} ${translator['is required!']}`,
     types: {
-      email: `\${${inputName}} ${messages['is not valid!']}`,
+      email: `\${${inputName}} ${translator['is not valid!']}`,
     },
     string: {
-      min: `\${${inputName}} ${messages['should be at least']} \${min} ${messages['characters']}`,
-      max: `\${${inputName}} ${messages['should be max']} \${min} ${messages['characters']}`,
+      min: `\${${inputName}} ${translator['should be at least']} \${min} ${translator['characters']}`,
+      max: `\${${inputName}} ${translator['should be max']} \${min} ${translator['characters']}`,
       range: "'${name}' must be between ${min} and ${max} characters",
     },
   };

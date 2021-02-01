@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Divider } from 'antd';
+import { Row, Divider, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -31,6 +31,7 @@ const LangSwithcer = styled(LangSwitch)`
 function UserAuth() {
   const location = useLocation();
   const isLoggedIn = useSelector(state => state.Auth.token);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
   useEffect(() => {
@@ -48,11 +49,24 @@ function UserAuth() {
     <RowWrapper type="flex" justify="center" align="middle">
       <LangSwithcer />
       <div className="login-content">
-        <h1 className="text-center">
-          <FormattedMessage id="Login" />
-        </h1>
+        <Typography.Title className="text-center">
+          {!isRegistering ? (
+            <FormattedMessage id="Login" />
+          ) : (
+            <FormattedMessage id="Register" />
+          )}
+        </Typography.Title>
         <Divider />
-        <UserAuthForm />
+        <UserAuthForm isRegistering={isRegistering} />
+        <Row justify="center">
+          <Button
+            className="text-center"
+            onClick={() => setIsRegistering(!isRegistering)}
+            type="link"
+          >
+            <FormattedMessage id="Don't have an account?" />
+          </Button>
+        </Row>
       </div>
     </RowWrapper>
   );
