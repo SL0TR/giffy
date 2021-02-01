@@ -1,14 +1,13 @@
 const User = require('@api/user/model');
 const authUtil = require('@root/utils/authUtil');
-const statusCodes = require('http-status-codes');
-const { generateAuthHash } = require('./helper');
+const { StatusCodes } = require('http-status-codes');
 
 async function createUser(user) {
   const { email, passCode } = user;
 
   if (!email && !passCode) {
     return {
-      statusCode: statusCodes.BAD_REQUEST,
+      statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Please enter all fields' },
     };
   }
@@ -19,13 +18,13 @@ async function createUser(user) {
 
     if (existingUser) {
       return {
-        statusCode: statusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.UNAUTHORIZED,
         data: { message: 'This email already exists!' },
       };
     }
   } catch (e) {
     return {
-      statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: { message: 'Soomething went wrong D:' },
     };
   }
@@ -36,7 +35,7 @@ async function createUser(user) {
     const authToken = await authUtil.signAuthToken(email);
 
     return {
-      statusCode: statusCodes.CREATED,
+      statusCode: StatusCodes.CREATED,
       data: {
         authToken,
         user: { email: newUser.email },
@@ -44,7 +43,7 @@ async function createUser(user) {
     };
   } catch (e) {
     return {
-      statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: { message: e.message },
     };
   }
@@ -55,7 +54,7 @@ async function signIn(user) {
 
   if (!email || !passCode) {
     return {
-      statusCode: statusCodes.BAD_REQUEST,
+      statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Please enter all fields' },
     };
   }
@@ -65,14 +64,14 @@ async function signIn(user) {
 
     if (!existingUser) {
       return {
-        statusCode: statusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.UNAUTHORIZED,
         data: { message: `User does't exist!` },
       };
     }
 
     if (!existingUser.authenticate(passCode)) {
       return {
-        statusCode: statusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.UNAUTHORIZED,
         data: { message: `Wrong Password!` },
       };
     }
@@ -81,7 +80,7 @@ async function signIn(user) {
 
     const { email } = existingUser;
     return {
-      statusCode: statusCodes.OK,
+      statusCode: StatusCodes.OK,
       data: {
         authToken,
         user: { email },
@@ -89,7 +88,7 @@ async function signIn(user) {
     };
   } catch (e) {
     return {
-      statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: { message: e.message },
     };
   }

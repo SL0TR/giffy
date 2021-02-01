@@ -4,6 +4,7 @@
     "node": true,
     "mocha": true
   },
+  
   "rules": {
     "semi": 0,
     "space-before-function-paren": 0,
@@ -14,6 +15,9 @@
     "require": true,
     "process": true,
     "module": true
+  },
+  "parserOptions": {
+  //  "ecmaVersion": 2020
   },
   "extends": "standard"
 }

@@ -1,15 +1,16 @@
-const statusCodes = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const User = require('@api/user/model');
 const bcrypt = require('bcrypt');
 
 async function updatePassword(req) {
   const { newPassCode, currentPassCode } = req.body;
 
-  if (!newPassCode || !currentPassCode)
+  if (!newPassCode || !currentPassCode) {
     return {
-      statusCode: statusCodes.BAD_REQUEST,
+      statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Please enter all fields' },
     };
+  }
 
   const userId = req.user._id;
 
@@ -17,7 +18,7 @@ async function updatePassword(req) {
     const foundUser = await User.findById(userId);
     if (!foundUser.authenticate(currentPassCode)) {
       return {
-        statusCode: statusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.UNAUTHORIZED,
         data: { message: `Wrong Password!` },
       };
     }
@@ -31,7 +32,7 @@ async function updatePassword(req) {
     const { shopName, ownerName, phoneNum } = userUpdated;
 
     return {
-      statusCode: statusCodes.OK,
+      statusCode: StatusCodes.OK,
       data: {
         message: 'User Password updated',
         user: { shopName, ownerName, phoneNum },
@@ -39,7 +40,7 @@ async function updatePassword(req) {
     };
   } catch (err) {
     return {
-      statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: { message: err.message },
     };
   }
@@ -49,7 +50,7 @@ async function updatePassword(req) {
 //   const { shopName, ownerName, phoneNum } = req.body;
 //   if (!shopName || !ownerName || !phoneNum)
 //     return {
-//       statusCode: statusCodes.BAD_REQUEST,
+//       statusCode: StatusCodes.BAD_REQUEST,
 //       data: { message: 'Please enter all fields' },
 //     };
 
@@ -63,7 +64,7 @@ async function updatePassword(req) {
 
 //     if (phoneNumTaken) {
 //       return {
-//         statusCode: statusCodes.CONFLICT,
+//         statusCode: StatusCodes.CONFLICT,
 //         data: { message: 'PhoneNum already taken!' },
 //       };
 //     }
@@ -77,7 +78,7 @@ async function updatePassword(req) {
 //     await User.findByIdAndUpdate(userId, updateInfo);
 
 //     return {
-//       statusCode: statusCodes.OK,
+//       statusCode: StatusCodes.OK,
 //       data: {
 //         message: 'User Profile updated',
 //         user: updateInfo,
@@ -85,7 +86,7 @@ async function updatePassword(req) {
 //     };
 //   } catch (err) {
 //     return {
-//       statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+//       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
 //       data: { message: err.message },
 //     };
 //   }

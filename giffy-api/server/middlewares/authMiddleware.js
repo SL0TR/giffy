@@ -1,17 +1,17 @@
-const statusCodes = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const User = require('@api/user/model');
 const authUtil = require('../utils/authUtil');
 
 function getFreshUser() {
   return function (req, res, next) {
-    if (req.user && req.user.phoneNum) {
-      User.findOne({ phoneNum: req.user.phoneNum })
+    if (req.user && req.user.email) {
+      User.findOne({ email: req.user.email })
         .select('-passCode')
         .then(
           function (user) {
             if (!user) {
               res
-                .status(statusCodes.UNAUTHORIZED)
+                .status(StatusCodes.UNAUTHORIZED)
                 .send({ message: 'Unauthorized!' });
             } else {
               req.user = user;
@@ -24,7 +24,7 @@ function getFreshUser() {
         );
     } else {
       return res
-        .status(statusCodes.UNAUTHORIZED)
+        .status(StatusCodes.UNAUTHORIZED)
         .send({ message: 'Unauthorised' });
     }
   };
@@ -42,61 +42,29 @@ function decodeAuthToken() {
     if (authToken) {
       try {
         const decodedToken = await authUtil.verifyToken(authToken);
-        const { phoneNum, authId } = decodedToken;
+        const { email } = decodedToken;
         req.user = {
-          phoneNum,
-          authId,
+          email,
         };
         next();
       } catch (err) {
-        if (err.name == 'TokenExpiredError') {
+        if (err.name === 'TokenExpiredError') {
           return res.status(427).send({ message: 'AuthToken Expired' });
         }
 
         return res
-          .status(statusCodes.UNAUTHORIZED)
+          .status(StatusCodes.UNAUTHORIZED)
           .send({ message: 'AuthToken is not valid' });
       }
     } else {
       return res
-        .status(statusCodes.UNAUTHORIZED)
+        .status(StatusCodes.UNAUTHORIZED)
         .send({ message: 'AuthToken is not supplied' });
-    }
-  };
-}
-
-function decodeRefreshToken() {
-  return async function (req, res, next) {
-    let refreshToken = req.body['refreshToken'];
-
-    if (refreshToken) {
-      try {
-        const decodedToken = await authUtil.verifyToken(refreshToken);
-        const { phoneNum, authId } = decodedToken;
-        req.userRefreshToken = {
-          phoneNum,
-          authId,
-        };
-        next();
-      } catch (err) {
-        if (err.name == 'TokenExpiredError') {
-          return res.status(433).send({ message: 'RefreshToken Expired' });
-        }
-
-        return res
-          .status(statusCodes.UNAUTHORIZED)
-          .send({ message: 'RefreshToken is not valid' });
-      }
-    } else {
-      return res
-        .status(statusCodes.UNAUTHORIZED)
-        .send({ message: 'Refresh token is not supplied' });
     }
   };
 }
 
 module.exports = {
   decodeAuthToken,
-  decodeRefreshToken,
   getFreshUser,
 };
