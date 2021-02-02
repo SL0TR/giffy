@@ -1,23 +1,28 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const initState = {
-  list: [],
+  myGifs: [],
+  allGifs: [],
 };
 
 const GifSlice = createSlice({
   name: 'gif',
   initialState: initState,
   reducers: {
-    login(state, { payload }) {
-      state.token = payload;
+    getMyGifs(state, { payload }) {
+      state.myGifs = payload;
     },
-    logout(state) {
-      state.token = null;
+    getAllGifs(state, { payload }) {
+      state.allGifs = payload;
     },
   },
 });
 
 export const createGifReq = createAction('gif/createGifReq');
-export const { login, logout } = GifSlice.actions;
+export const getMyGifsReq = createAction('gif/getMyGifsReq');
+export const getAllGifsReq = createAction('gif/getAllGifsReq');
+export const updateGifReq = createAction('gif/updateGifReq');
+
+export const { getAllGifs, getMyGifs } = GifSlice.actions;
 
 export default GifSlice;

@@ -72,7 +72,7 @@ function VideoToGif() {
   }
 
   if (uploadSuccess) {
-    return <GifUploadSucc />;
+    return <GifUploadSucc setUploadSuccess={setUploadSuccess} />;
   }
 
   return (

@@ -1,9 +1,8 @@
 import { all } from 'redux-saga/effects';
 import { AuthSaga } from 'features/UserAuth';
 import { VideoToGifSaga } from 'features/VideoToGif';
-
-console.log(VideoToGifSaga);
+import { GifSaga } from 'features/Gifs';
 
 export default function* rootSaga() {
-  yield all([AuthSaga(), VideoToGifSaga()]);
+  yield all([AuthSaga(), VideoToGifSaga(), GifSaga()]);
 }

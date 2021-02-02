@@ -17,6 +17,15 @@ router.get(
   '/',
   [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
   async function (req, res) {
+    const { statusCode, data } = await controller.getAllUserGifs(req);
+    res.status(statusCode).send(data);
+  }
+);
+
+router.get(
+  '/all',
+  [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
+  async function (req, res) {
     const { statusCode, data } = await controller.getAllGifs(req);
     res.status(statusCode).send(data);
   }

@@ -12,4 +12,7 @@ export const PRIVATE_ROUTE = {
   HOME: '',
   DEMO_PAGE: 'demo',
   VID_TO_GIF_PAGE: 'vid-to-gif',
+  MY_GIFS: 'my-gifs',
+  ALL_GIFS: 'all-gifs',
+  ID: ':id',
 };

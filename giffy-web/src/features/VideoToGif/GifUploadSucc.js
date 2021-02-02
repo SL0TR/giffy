@@ -3,6 +3,8 @@ import { Button, Result } from 'antd';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { PRIVATE_ROUTE } from 'router';
 
 function GifUploadSucc({ setUploadSuccess }) {
   return (
@@ -16,7 +18,9 @@ function GifUploadSucc({ setUploadSuccess }) {
           <Button type="primary" onClick={() => setUploadSuccess(false)}>
             Convert and upload again!
           </Button>
-          <Button type="link">See all your gifs</Button>
+          <Link to={PRIVATE_ROUTE.MY_GIFS}>
+            <Button type="link">See all your gifs</Button>
+          </Link>
         </>
       }
     />

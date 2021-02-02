@@ -1,9 +1,10 @@
 import { http } from 'services';
-import { gifUrl, gifUploadUrl } from './endpoints';
+import { gifUrl, gifUploadUrl, getAllgifUrl } from './endpoints';
 
 export const GifApi = {
-  index: () => http.post(gifUrl),
+  index: () => http.get(gifUrl),
+  getAll: () => http.get(getAllgifUrl),
   uploadImg: data => http.post(gifUploadUrl, data),
   create: data => http.post(gifUrl, data),
-  update: data => http.post(gifUrl, data),
+  update: (data, id) => http.put(`${gifUrl}/${id}`, data),
 };

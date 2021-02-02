@@ -4,10 +4,6 @@ const Gif = require('./model');
 async function createGif(req) {
   const { url } = req.body;
 
-  if (url) {
-    console.log(url);
-  }
-
   const gif = {
     url,
     user: req?.user?._id,
@@ -27,19 +23,31 @@ async function createGif(req) {
   }
 }
 
-async function getAllGifs(req) {
-  let { pageNum, pageSize } = req.query;
-
-  pageNum = Number(parseInt(pageNum));
-  pageSize = Number(parseInt(pageSize));
-
+async function getAllUserGifs(req) {
   try {
-    // const Gifs = await Gif.aggregate(GifAggOpts).sort({
-    //   'transactions.createdAt' : -1
-    // });
+    const gifs = await Gif.find({ user: req.user._id })
+      .sort('-createdAt')
+      .populate('user', 'email');
+
     return {
       statusCode: StatusCodes.OK,
-      // data: { total: Gifs.length, data: Gifs },
+      data: { total: gifs.length, data: gifs },
+    };
+  } catch (e) {
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: { message: e.message },
+    };
+  }
+}
+
+async function getAllGifs(req) {
+  try {
+    const gifs = await Gif.find({ isPublic: true }).sort('-created_at');
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: { total: gifs.length, data: gifs },
     };
   } catch (e) {
     return {
@@ -50,15 +58,22 @@ async function getAllGifs(req) {
 }
 
 async function updateGif(req) {
-  if (!req.params.id)
+  const { isPublic, likes, comments } = req.body;
+
+  console.log(isPublic);
+
+  if (!req.params.id) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
       data: { message: 'Params Missing' },
     };
+  }
 
-  const { id: GifId } = req.params;
+  const { id: gifId } = req.params;
 
   try {
+    await Gif.findByIdAndUpdate(gifId, { isPublic });
+
     return {
       statusCode: StatusCodes.OK,
       data: { success: true },
@@ -73,6 +88,7 @@ async function updateGif(req) {
 
 module.exports = {
   createGif,
-  getAllGifs,
+  getAllUserGifs,
   updateGif,
+  getAllGifs,
 };

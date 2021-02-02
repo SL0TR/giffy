@@ -1,15 +1,15 @@
-import React from 'react';
 import Gifs from 'features/Gifs';
+import React from 'react';
 import { LayoutContentWrapper, LayoutContent } from 'styles';
 
-function DashboardHomePage() {
+function index() {
   return (
     <LayoutContentWrapper>
       <LayoutContent className="shadow">
-        <Gifs isPublic />
+        <Gifs isPublic={false} />
       </LayoutContent>
     </LayoutContentWrapper>
   );
 }
 
-export default DashboardHomePage;
+export default index;
