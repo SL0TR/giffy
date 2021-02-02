@@ -13,3 +13,5 @@ export const loginUrl = `${authUrl}login`;
 export const registerUrl = `${authUrl}register`;
 
 export const gifUrl = `${apiUrl}gif`;
+
+export const gifUploadUrl = 'https://api.cloudinary.com/v1_1/sl0tr/upload';

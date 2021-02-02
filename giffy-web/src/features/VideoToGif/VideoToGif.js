@@ -6,15 +6,17 @@ import Loader from './Loader';
 import VideoPlayback from './VideoPlayback';
 import VideoUpload from './VideoUpload';
 import Gif from './Gif';
+import GifUploadSucc from './GifUploadSucc';
 
 const ffmpeg = createFFmpeg({ log: true });
 
 function VideoToGif() {
   const [isFFmpegLoaded, setIsFFmpegLoaded] = useState(false);
   const [video, setVideo] = useState();
-  const [gif, setGif] = useState();
   const [converting, setConverting] = useState(false);
-  const [arrBuff, setArrBuff] = useState();
+  const [blob, setBlob] = useState();
+  const [blobString, setBlobString] = useState();
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const loadFFmpeg = async () => {
     await ffmpeg.load();
@@ -28,21 +30,23 @@ function VideoToGif() {
     await ffmpeg.run(
       '-i',
       video.name || 'test.mp4',
-      '-ss',
-      '2.0',
+      '-r',
+      '5',
+      '-vf',
+      'scale=320:-1:flags=lanczos',
+      '-t',
+      '8',
       '-f',
       'gif',
       'converted.gif',
     );
 
     const data = ffmpeg.FS('readFile', 'converted.gif');
+    const dataBlob = new Blob([data.buffer], { type: 'image/gif' });
 
-    const url = URL.createObjectURL(
-      new Blob([data.buffer], { type: 'image/gif' }),
-    );
-    setArrBuff(data);
+    setBlob(dataBlob);
+    setBlobString(URL.createObjectURL(dataBlob));
     setConverting(false);
-    setGif(url);
     setVideo(null);
   }
 
@@ -54,13 +58,26 @@ function VideoToGif() {
     }
   }, []);
 
+  useEffect(() => {
+    if (uploadSuccess) {
+      ffmpeg.FS('unlink', 'converted.gif');
+      setVideo(null);
+      setConverting(false);
+      setBlobString(null);
+    }
+  }, [uploadSuccess]);
+
   if (!isFFmpegLoaded) {
     return <Loader />;
   }
 
+  if (uploadSuccess) {
+    return <GifUploadSucc />;
+  }
+
   return (
     <Row gutter={[20, 20]} align="middle" justify="center">
-      <VideoUpload setVideo={setVideo} setGif={setGif} />
+      <VideoUpload setVideo={setVideo} setBlobString={setBlobString} />
       {video && <VideoPlayback video={video} />}
       {video && (
         <Col span={24} align="middle">
@@ -74,7 +91,13 @@ function VideoToGif() {
           </Button>
         </Col>
       )}
-      {gif && <Gif gif={gif} arrBuff={arrBuff} />}
+      {blobString && (
+        <Gif
+          setUploadSuccess={setUploadSuccess}
+          blobString={blobString}
+          blob={blob}
+        />
+      )}
     </Row>
   );
 }

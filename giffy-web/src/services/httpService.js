@@ -10,6 +10,9 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(config => {
+  if (config?.url.includes('cloudinary')) {
+    return config;
+  }
   const state = store?.getState();
 
   if (state?.Auth?.token) {
