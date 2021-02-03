@@ -27,7 +27,9 @@ async function getAllUserGifs(req) {
   try {
     const gifs = await Gif.find({ user: req.user._id })
       .sort('-createdAt')
-      .populate('user', 'email');
+      .populate('user', 'email')
+      .populate('comments.user', 'email')
+      .populate('likes', 'email');
 
     return {
       statusCode: StatusCodes.OK,
@@ -43,7 +45,11 @@ async function getAllUserGifs(req) {
 
 async function getAllGifs(req) {
   try {
-    const gifs = await Gif.find({ isPublic: true }).sort('-created_at');
+    const gifs = await Gif.find({ isPublic: true })
+      .sort('-createdAt')
+      .populate('user', 'email')
+      .populate('comments.user', 'email')
+      .populate('likes', 'email');
 
     return {
       statusCode: StatusCodes.OK,
@@ -60,7 +66,13 @@ async function getAllGifs(req) {
 async function updateGif(req) {
   const { isPublic, likes, comments } = req.body;
 
-  console.log(isPublic);
+  const update = {
+    ...(isPublic !== null && isPublic !== undefined ? { isPublic } : {}),
+    ...(likes ? { likes } : {}),
+    ...(comments ? { comments } : {}),
+  };
+
+  console.log(update);
 
   if (!req.params.id) {
     return {
@@ -72,7 +84,32 @@ async function updateGif(req) {
   const { id: gifId } = req.params;
 
   try {
-    await Gif.findByIdAndUpdate(gifId, { isPublic });
+    await Gif.findByIdAndUpdate(gifId, update);
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: { success: true },
+    };
+  } catch (e) {
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: { message: e.message },
+    };
+  }
+}
+
+async function deleteGif(req) {
+  if (!req.params.id) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      data: { message: 'Params Missing' },
+    };
+  }
+
+  const { id: gifId } = req.params;
+
+  try {
+    await Gif.findByIdAndDelete(gifId);
 
     return {
       statusCode: StatusCodes.OK,
@@ -91,4 +128,5 @@ module.exports = {
   getAllUserGifs,
   updateGif,
   getAllGifs,
+  deleteGif,
 };

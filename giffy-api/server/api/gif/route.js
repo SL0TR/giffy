@@ -40,4 +40,13 @@ router.put(
   }
 );
 
+router.delete(
+  '/:id',
+  [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
+  async function (req, res) {
+    const { statusCode, data } = await controller.deleteGif(req);
+    res.status(statusCode).send(data);
+  }
+);
+
 module.exports = router;

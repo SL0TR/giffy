@@ -38,7 +38,7 @@ async function createUser(user) {
       statusCode: StatusCodes.CREATED,
       data: {
         authToken,
-        user: { email: newUser.email },
+        user: { email: newUser.email, _id: newUser._id },
       },
     };
   } catch (e) {
@@ -65,25 +65,26 @@ async function signIn(user) {
     if (!existingUser) {
       return {
         statusCode: StatusCodes.UNAUTHORIZED,
-        data: { message: `User does't exist!` },
+        data: { message: "User does't exist!" },
       };
     }
 
     if (!existingUser.authenticate(password)) {
       return {
         statusCode: StatusCodes.UNAUTHORIZED,
-        data: { message: `Wrong Password!` },
+        data: { message: 'Wrong Password!' },
       };
     }
 
     const authToken = await authUtil.signAuthToken(existingUser.email);
 
-    const { email } = existingUser;
+    const { email, _id } = existingUser;
+
     return {
       statusCode: StatusCodes.OK,
       data: {
         authToken,
-        user: { email },
+        user: { email, _id },
       },
     };
   } catch (e) {

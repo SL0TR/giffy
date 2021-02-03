@@ -20,26 +20,31 @@ const Gif = new Schema(
     },
     likes: [
       {
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: 'user',
-          author: true,
-          required: true,
-        },
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        author: true,
+        required: true,
       },
     ],
     comments: [
       {
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: 'user',
-          author: true,
-          required: true,
-        },
-        createdAt: Date,
+        type: new mongoose.Schema(
+          {
+            user: {
+              type: Schema.Types.ObjectId,
+              ref: 'user',
+              author: true,
+              required: true,
+            },
+            text: {
+              type: String,
+              required: "Comment can't be empty",
+            },
+          },
+          { timestamps: true }
+        ),
       },
     ],
-    createdAt: Date,
   },
   { timestamps: true }
 );

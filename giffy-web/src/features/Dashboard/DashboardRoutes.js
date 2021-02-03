@@ -21,6 +21,16 @@ const routes = [
     component: lazy(() => import('pages/MyGifsPage')),
     exact: true,
   },
+  {
+    path: PRIVATE_ROUTE.MY_GIFS,
+    component: lazy(() => import('pages/MyGifsPage')),
+    exact: true,
+  },
+  {
+    path: PRIVATE_ROUTE.PARAM_ID,
+    component: lazy(() => import('pages/GifDetailPage')),
+    exact: true,
+  },
 ];
 
 export default function AppRouter() {

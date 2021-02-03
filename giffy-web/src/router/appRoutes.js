@@ -14,5 +14,5 @@ export const PRIVATE_ROUTE = {
   VID_TO_GIF_PAGE: 'vid-to-gif',
   MY_GIFS: 'my-gifs',
   ALL_GIFS: 'all-gifs',
-  ID: ':id',
+  PARAM_ID: ':id',
 };

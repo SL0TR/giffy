@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'antd';
 import { getAllGifsReq, getMyGifsReq } from './reducer';
-import SingleGif from './SingleGif';
+import SingleGifCard from './SingleGifCard';
 
 function Gifs({ isPublic = true }) {
   const dispatch = useDispatch();
@@ -20,12 +20,22 @@ function Gifs({ isPublic = true }) {
   return (
     <Row gutter={[20, 40]}>
       {isPublic &&
-        allGifs.map(gif => (
-          <SingleGif key={gif?._id} gif={gif} isPublic={isPublic} />
+        allGifs.map((gif, i) => (
+          <SingleGifCard
+            key={gif?._id}
+            index={i}
+            gif={gif}
+            isPublic={isPublic}
+          />
         ))}
       {!isPublic &&
-        myGifs.map(gif => (
-          <SingleGif key={gif?._id} gif={gif} isPublic={isPublic} />
+        myGifs.map((gif, i) => (
+          <SingleGifCard
+            key={gif?._id}
+            index={i}
+            gif={gif}
+            isPublic={isPublic}
+          />
         ))}
     </Row>
   );

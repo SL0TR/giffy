@@ -7,7 +7,12 @@ import { customRequest, getValidVideoFile } from './helper';
 
 const { Dragger } = Upload;
 
-function VideoUpload({ setVideo, setBlobString }) {
+function VideoUpload({
+  setVideo,
+  setBlobString,
+  setVideoStartDuration,
+  setVideoEndDuration,
+}) {
   const { messages } = useIntl();
 
   function onVideoUploadChange(info) {
@@ -23,6 +28,8 @@ function VideoUpload({ setVideo, setBlobString }) {
         setVideo(info.file.originFileObj);
         setBlobString(null);
       }
+      setVideoStartDuration(null);
+      setVideoEndDuration(null);
     } else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -51,6 +58,8 @@ function VideoUpload({ setVideo, setBlobString }) {
 VideoUpload.propTypes = {
   setVideo: PropTypes.func,
   setBlobString: PropTypes.func,
+  setVideoEndDuration: PropTypes.func,
+  setVideoStartDuration: PropTypes.func,
 };
 
 export default VideoUpload;

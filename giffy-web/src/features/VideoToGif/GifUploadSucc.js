@@ -19,7 +19,7 @@ function GifUploadSucc({ setUploadSuccess }) {
             Convert and upload again!
           </Button>
           <Link to={PRIVATE_ROUTE.MY_GIFS}>
-            <Button type="link">See all your gifs</Button>
+            <Button type="ghost">See all your gifs</Button>
           </Link>
         </>
       }

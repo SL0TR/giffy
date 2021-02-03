@@ -17,6 +17,8 @@ function VideoToGif() {
   const [blob, setBlob] = useState();
   const [blobString, setBlobString] = useState();
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [videoStartDuration, setVideoStartDuration] = useState(0);
+  const [videoEndDuration, setVideoEndDuration] = useState();
 
   const loadFFmpeg = async () => {
     await ffmpeg.load();
@@ -35,7 +37,9 @@ function VideoToGif() {
       '-vf',
       'scale=320:-1:flags=lanczos',
       '-t',
-      '8',
+      videoEndDuration ? `${videoEndDuration}.0` : '8.0',
+      '-ss',
+      videoStartDuration ? `${videoStartDuration}.0` : '0.0',
       '-f',
       'gif',
       'converted.gif',
@@ -48,6 +52,8 @@ function VideoToGif() {
     setBlobString(URL.createObjectURL(dataBlob));
     setConverting(false);
     setVideo(null);
+    setVideoStartDuration(null);
+    setVideoEndDuration(null);
   }
 
   useEffect(() => {
@@ -77,8 +83,20 @@ function VideoToGif() {
 
   return (
     <Row gutter={[20, 20]} align="middle" justify="center">
-      <VideoUpload setVideo={setVideo} setBlobString={setBlobString} />
-      {video && <VideoPlayback video={video} />}
+      <VideoUpload
+        setVideoStartDuration={setVideoEndDuration}
+        setVideoEndDuration={setVideoEndDuration}
+        setVideo={setVideo}
+        setBlobString={setBlobString}
+      />
+      {video && (
+        <VideoPlayback
+          setVideoEndDuration={setVideoEndDuration}
+          setVideoStartDuration={setVideoStartDuration}
+          videoEndDuration={videoEndDuration}
+          video={video}
+        />
+      )}
       {video && (
         <Col span={24} align="middle">
           <Button
@@ -93,6 +111,7 @@ function VideoToGif() {
       )}
       {blobString && (
         <Gif
+          uploadSuccess={uploadSuccess}
           setUploadSuccess={setUploadSuccess}
           blobString={blobString}
           blob={blob}

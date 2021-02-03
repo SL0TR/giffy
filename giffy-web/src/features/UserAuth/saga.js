@@ -8,16 +8,16 @@ export function* loginSaga({ payload: { successText, formData } }) {
 
   if (data?.authToken) {
     message.success(successText);
-    yield put(login(data.authToken));
+    yield put(login(data));
   }
 }
 
 export function* registerSaga({ payload: { successText, formData } }) {
   const { data } = yield call(Auth.register, formData);
 
-  if (data?.authToken) {
+  if (data) {
     message.success(successText);
-    yield put(login(data.authToken));
+    yield put(login(data));
   }
 }
 

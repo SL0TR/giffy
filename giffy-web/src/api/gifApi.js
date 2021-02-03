@@ -7,4 +7,5 @@ export const GifApi = {
   uploadImg: data => http.post(gifUploadUrl, data),
   create: data => http.post(gifUrl, data),
   update: (data, id) => http.put(`${gifUrl}/${id}`, data),
+  delete: id => http.delete(`${gifUrl}/${id}`),
 };
