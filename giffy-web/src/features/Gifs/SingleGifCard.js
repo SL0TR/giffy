@@ -11,12 +11,13 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
+import { PRIVATE_ROUTE } from 'router';
 import { deleteGifReq, updateGifReq } from './reducer';
 import { toggleLike } from './helper';
 
 const { Meta } = Card;
 
-function SingleGifCard({ gif, isPublic, index }) {
+function SingleGifCard({ gif, isPublic }) {
   const dispatch = useDispatch();
   const userId = useSelector(reduxState => reduxState.Auth.user?._id);
   const theme = useTheme();
@@ -98,12 +99,7 @@ function SingleGifCard({ gif, isPublic, index }) {
     <Col span={8}>
       <Card
         cover={
-          <Link
-            to={{
-              pathname: `${gif?._id}`,
-              state: { index, cameFrom: isPublic ? 'allGifs' : 'myGifs' },
-            }}
-          >
+          <Link to={`/${PRIVATE_ROUTE.DASHBOARD}/${gif?._id}`}>
             <img alt="gif" width="100%" src={gif?.url} />
           </Link>
         }
@@ -129,7 +125,6 @@ function SingleGifCard({ gif, isPublic, index }) {
 SingleGifCard.propTypes = {
   gif: PropTypes.object,
   isPublic: PropTypes.bool,
-  index: PropTypes.number,
 };
 
 export default SingleGifCard;
