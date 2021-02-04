@@ -21,10 +21,11 @@ const SidebarWrapper = styled.div`
 
     .sidebarLogo {
       display: flex;
-      width: 100%;
+      width: 80%;
       justify-content: center;
       align-items: center;
-      padding: 2.3rem 0 8rem 0;
+      padding: 3.3rem 0 8rem 0;
+      margin: 0 auto;
     }
 
     a {
