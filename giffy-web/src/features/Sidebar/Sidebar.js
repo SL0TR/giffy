@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import options from './options';
 import SidebarWrapper from './styles';
 import SidebarMenu from './SidebarMenu';
+import { ReactComponent as GifIcon } from './assets/giffy-logo.svg';
 
 const { Sider } = Layout;
 
@@ -20,11 +21,7 @@ export default function Sidebar() {
         collapsed={collapsed}
         style={{ backgroundColor: '#fff' }}
       >
-        <img
-          style={{ width: '100%' }}
-          src="http://www.thedemocompany.com/wp-content/uploads/2017/03/asset-22.png"
-          alt="demo logo"
-        />
+        <GifIcon className="sidebarLogo" />
         <ul className="sidebar-menu">
           {options.map(singleOption => (
             <SidebarMenu key={singleOption.key} singleOption={singleOption} />

@@ -1,6 +1,6 @@
 const theme = {
-  primary: '#2c3e50',
-  accent: '#2C2C50',
+  primary: '#25B6D2',
+  accent: '#E04F5F',
   bg: '#dfe6e9',
   bgGradient: 'linear-gradient(to right, #e0eafc, #cfdef3)',
   shadow: `0px 4px 15px rgba(35, 123, 176, 0.06)`,
