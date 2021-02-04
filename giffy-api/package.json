@@ -14,7 +14,7 @@
     "@middlewares": "server/middlewares"
   },
   "scripts": {
-    "start": "set DEBUG=gif-verse-api & node index.js",
+    "start": "set DEBUG=gif-verse-api & cross-env NODE_ENV=production node index.js",
     "start-dev": "set DEBUG=gif-verse-api & nodemon index.js",
     "test": "mocha -r server/testHelpers/globals.js server/**/*.test.js",
     "lint": "eslint server/",
@@ -37,6 +37,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

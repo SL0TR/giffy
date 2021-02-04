@@ -4,6 +4,6 @@
 module.exports = {
   DEFAULT_PORT: 8282,
   JWT_AUTH_TOKEN_EXPIRY_TIME: '30d',
-  DB_URL: process.env.DB_URL,
+  DB_URL: process.env.DB_URL_DEV,
   JWT_SECRET: process.env.JWT_SECRET,
 };

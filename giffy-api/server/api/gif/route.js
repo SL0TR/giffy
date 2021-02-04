@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const controller = require('./controller');
-
 const authMiddleware = require('@middlewares/authMiddleware');
-const { logger } = require('handlebars');
 
 router.post(
   '/',
