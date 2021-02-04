@@ -36,7 +36,7 @@ function Gif({ blobString, blob, setUploadSuccess, uploadSuccess }) {
           size="large"
           type="primary"
         >
-          <FormattedMessage id="Save GIF" />
+          <FormattedMessage id="Upload GIF" />
         </Button>
       </Col>
     </>

@@ -17,7 +17,7 @@ function VideoToGif() {
   const [blob, setBlob] = useState();
   const [blobString, setBlobString] = useState();
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [videoStartDuration, setVideoStartDuration] = useState(0);
+  const [videoStartDuration, setVideoStartDuration] = useState();
   const [videoEndDuration, setVideoEndDuration] = useState();
 
   const loadFFmpeg = async () => {
@@ -84,15 +84,16 @@ function VideoToGif() {
   return (
     <Row gutter={[20, 20]} align="middle" justify="center">
       <VideoUpload
-        setVideoStartDuration={setVideoEndDuration}
+        setVideoStartDuration={setVideoStartDuration}
         setVideoEndDuration={setVideoEndDuration}
         setVideo={setVideo}
         setBlobString={setBlobString}
       />
       {video && (
         <VideoPlayback
-          setVideoEndDuration={setVideoEndDuration}
+          videoStartDuration={videoStartDuration}
           setVideoStartDuration={setVideoStartDuration}
+          setVideoEndDuration={setVideoEndDuration}
           videoEndDuration={videoEndDuration}
           video={video}
         />

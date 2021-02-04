@@ -14,7 +14,7 @@
     "@middlewares": "server/middlewares"
   },
   "scripts": {
-    "start": "set DEBUG=gif-verse-api node index.js",
+    "start": "set DEBUG=gif-verse-api & node index.js",
     "start-dev": "set DEBUG=gif-verse-api & nodemon index.js",
     "test": "mocha -r server/testHelpers/globals.js server/**/*.test.js",
     "lint": "eslint server/",

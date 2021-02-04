@@ -18,7 +18,6 @@ function VideoPlayback({
 
   function handleVideoMetaLoad(e) {
     setVideoDuration(Math.round(e.target.duration));
-    console.log('called');
   }
 
   function handleSlideChange([start, end]) {
@@ -70,7 +69,7 @@ function VideoPlayback({
               <Typography.Paragraph>
                 {`Gif end: ${
                   videoEndDuration || (videoDuration <= 10 ? videoDuration : 10)
-                }s`}
+                }s (Max 10s)`}
               </Typography.Paragraph>
             </Col>
           </Row>
