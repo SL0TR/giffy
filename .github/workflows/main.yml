@@ -14,6 +14,4 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_SECRET }}
           NETLIFY_DEPLOY_TO_PROD: true
           build_directory: giff-web/build
-          build_command: yarn build
-          install_command: yarn
 
