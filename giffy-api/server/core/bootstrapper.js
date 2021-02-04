@@ -19,7 +19,7 @@ function _initialize_() {
 }
 
 function initiate() {
-  let app = _initialize_();
+  const app = _initialize_();
 
   return app;
 }
