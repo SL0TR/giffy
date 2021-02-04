@@ -6,7 +6,7 @@ function LikeList({ list = [] }) {
   return (
     <Row>
       {list.map(el => (
-        <Col span={24}>
+        <Col key={el?.email} span={24}>
           <Typography.Text>{el?.email}</Typography.Text>
         </Col>
       ))}

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from 'react';
-import { useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import {
   Col,
   Divider,
@@ -18,21 +18,36 @@ import { LikeOutlined, LikeFilled, CommentOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
 import CommentEditor from './CommentEditor';
-import { updateGifReq } from './reducer';
+import { getSingleGiffReq, updateGifReq } from './reducer';
 import { toggleLike } from './helper';
 import LikeList from './LikeList';
 
 dayjs.extend(relativeTime);
 
 function SingleGifView() {
-  const { state } = useLocation();
   const dispatch = useDispatch();
+  const { id } = useParams();
   const theme = useTheme();
   const userId = useSelector(reduxState => reduxState.Auth.user?._id);
-  const gif = useSelector(
-    reduxState => reduxState.Gif[state?.cameFrom][state?.index],
-  );
-  const hasUserLikedGif = gif.likes.some(like => like?._id === userId);
+  const [gif, setGif] = useState();
+
+  const hasUserLikedGif = gif && gif.likes.some(like => like?._id === userId);
+
+  function onLikeChange() {
+    toggleLike({
+      dispatch,
+      updateGifReq,
+      gif,
+      userId,
+      hasUserLikedGif,
+      nestedIds: true,
+      setGif,
+    });
+  }
+
+  useEffect(() => {
+    dispatch(getSingleGiffReq({ id, setGif }));
+  }, []);
 
   return (
     <Row gutter={40} align="middle">
@@ -73,32 +88,14 @@ function SingleGifView() {
                 {hasUserLikedGif ? (
                   <LikeFilled
                     style={{ color: theme.accent }}
-                    onClick={() =>
-                      toggleLike({
-                        dispatch,
-                        updateGifReq,
-                        gif,
-                        userId,
-                        hasUserLikedGif,
-                      })
-                    }
+                    onClick={onLikeChange}
                   />
                 ) : (
-                  <LikeOutlined
-                    onClick={() =>
-                      toggleLike({
-                        dispatch,
-                        updateGifReq,
-                        gif,
-                        userId,
-                        hasUserLikedGif,
-                      })
-                    }
-                  />
+                  <LikeOutlined onClick={onLikeChange} />
                 )}
 
                 <Popover
-                  content={<LikeList list={gif.likes} />}
+                  content={<LikeList list={gif?.likes} />}
                   title="Liked by"
                 >
                   {` ${gif?.likes.length} Likes`}
@@ -109,7 +106,7 @@ function SingleGifView() {
               </Col>
             </Row>
             <Divider />
-            <Comment content={<CommentEditor gif={gif} />} />
+            <Comment content={<CommentEditor gif={gif} setGif={setGif} />} />
           </Col>
         </Row>
       </Col>

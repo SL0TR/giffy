@@ -4,17 +4,32 @@ export function toggleLike({
   gif,
   userId,
   hasUserLikedGif,
+  setGif,
+  nestedIds = false,
 }) {
-  const likes = hasUserLikedGif
-    ? gif.likes.map(el => el?._id).filter(id => id !== userId)
-    : [userId, ...gif.likes];
+  let likes = [];
+
+  if (nestedIds) {
+    const onlyIds = gif.likes.map(el => el?._id);
+
+    likes = hasUserLikedGif
+      ? onlyIds.filter(id => id !== userId)
+      : [userId, ...onlyIds];
+  } else {
+    likes = hasUserLikedGif
+      ? gif.likes.filter(id => id !== userId)
+      : [userId, ...gif.likes];
+  }
+
   console.log(likes);
+
   dispatch(
     updateGifReq({
       id: gif?._id,
       reqData: {
         likes,
       },
+      setGif,
     }),
   );
 }

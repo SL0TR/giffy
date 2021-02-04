@@ -25,11 +25,7 @@ async function createGif(req) {
 
 async function getAllUserGifs(req) {
   try {
-    const gifs = await Gif.find({ user: req.user._id })
-      .sort('-createdAt')
-      .populate('user', 'email')
-      .populate('comments.user', 'email')
-      .populate('likes', 'email');
+    const gifs = await Gif.find({ user: req.user._id }).sort('-createdAt');
 
     return {
       statusCode: StatusCodes.OK,
@@ -45,15 +41,32 @@ async function getAllUserGifs(req) {
 
 async function getAllGifs(req) {
   try {
-    const gifs = await Gif.find({ isPublic: true })
-      .sort('-createdAt')
+    const gifs = await Gif.find({ isPublic: true }).sort('-createdAt');
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: { total: gifs.length, data: gifs },
+    };
+  } catch (e) {
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: { message: e.message },
+    };
+  }
+}
+
+async function getSingleGif(req) {
+  const { id } = req.params;
+
+  try {
+    const gif = await Gif.findOne({ _id: id })
       .populate('user', 'email')
       .populate('comments.user', 'email')
       .populate('likes', 'email');
 
     return {
       statusCode: StatusCodes.OK,
-      data: { total: gifs.length, data: gifs },
+      data: { gif, success: true },
     };
   } catch (e) {
     return {
@@ -129,4 +142,5 @@ module.exports = {
   updateGif,
   getAllGifs,
   deleteGif,
+  getSingleGif,
 };

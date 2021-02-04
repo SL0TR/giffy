@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true });
 const controller = require('./controller');
 
 const authMiddleware = require('@middlewares/authMiddleware');
+const { logger } = require('handlebars');
 
 router.post(
   '/',
@@ -36,6 +37,15 @@ router.put(
   [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
   async function (req, res) {
     const { statusCode, data } = await controller.updateGif(req);
+    res.status(statusCode).send(data);
+  }
+);
+
+router.get(
+  '/:id',
+  [authMiddleware.decodeAuthToken(), authMiddleware.getFreshUser()],
+  async function (req, res) {
+    const { statusCode, data } = await controller.getSingleGif(req);
     res.status(statusCode).send(data);
   }
 );

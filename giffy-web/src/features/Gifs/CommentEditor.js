@@ -8,7 +8,7 @@ import { updateGifReq } from './reducer';
 
 const { TextArea } = Input;
 
-function CommentEditor({ gif }) {
+function CommentEditor({ gif, setGif }) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.Auth.user);
   const [comment, setComment] = useState(null);
@@ -27,6 +27,7 @@ function CommentEditor({ gif }) {
             ...gif?.comments,
           ],
         },
+        setGif,
       }),
     );
     setComment(null);
@@ -57,6 +58,7 @@ function CommentEditor({ gif }) {
 
 CommentEditor.propTypes = {
   gif: PropTypes.object,
+  setGif: PropTypes.func,
 };
 
 export default CommentEditor;

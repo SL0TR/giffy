@@ -23,6 +23,7 @@ export const getMyGifsReq = createAction('gif/getMyGifsReq');
 export const getAllGifsReq = createAction('gif/getAllGifsReq');
 export const updateGifReq = createAction('gif/updateGifReq');
 export const deleteGifReq = createAction('gif/deleteGifReq');
+export const getSingleGiffReq = createAction('gif/getSingleGiffReq');
 
 export const { getAllGifs, getMyGifs } = GifSlice.actions;
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-indent */
 import React from 'react';
-import { Card, Row, Col, Switch, Popover, Popconfirm } from 'antd';
+import { Card, Row, Col, Switch, Popconfirm } from 'antd';
 import {
   DeleteOutlined,
   LikeFilled,
@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { deleteGifReq, updateGifReq } from './reducer';
 import { toggleLike } from './helper';
-import LikeList from './LikeList';
 
 const { Meta } = Card;
 
@@ -21,7 +20,7 @@ function SingleGifCard({ gif, isPublic, index }) {
   const dispatch = useDispatch();
   const userId = useSelector(reduxState => reduxState.Auth.user?._id);
   const theme = useTheme();
-  const hasUserLikedGif = gif.likes.some(like => like?._id === userId);
+  const hasUserLikedGif = gif.likes.some(id => id === userId);
 
   const shareBtn = (
     <a
@@ -114,12 +113,7 @@ function SingleGifCard({ gif, isPublic, index }) {
           description={
             <Row>
               <Col span={12} align="middle">
-                <Popover
-                  content={<LikeList list={gif.likes} />}
-                  title="Liked by"
-                >
-                  <p>{`${gif?.likes.length} likes`}</p>
-                </Popover>
+                <p>{`${gif?.likes.length} likes`}</p>
               </Col>
               <Col span={12} align="middle">
                 <p>{`${gif?.comments.length} comments`}</p>

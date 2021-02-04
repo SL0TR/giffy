@@ -7,6 +7,7 @@ import {
   getMyGifs,
   updateGifReq,
   deleteGifReq,
+  getSingleGiffReq,
 } from './reducer';
 
 export function* getMyGifsSaga() {
@@ -25,12 +26,23 @@ export function* getAllGifsSaga() {
   }
 }
 
-export function* updateGifSaga({ payload: { reqData, id } }) {
+export function* getSingleGiffSaga({ payload: { setGif, id } }) {
+  const { data } = yield call(GifApi.getSingle, id);
+
+  if (data?.success && data?.gif) {
+    setGif(data.gif);
+  }
+}
+
+export function* updateGifSaga({ payload: { reqData, id, setGif } }) {
   const { data } = yield call(GifApi.update, reqData, id);
 
   if (data?.success) {
     yield call(getMyGifsSaga);
     yield call(getAllGifsSaga);
+    if (setGif) {
+      yield call(getSingleGiffSaga, { payload: { id, setGif } });
+    }
   }
 }
 
@@ -48,4 +60,5 @@ export default function* watchVideoToGifActions() {
   yield takeLatest(getAllGifsReq.toString(), getAllGifsSaga);
   yield takeLatest(updateGifReq.toString(), updateGifSaga);
   yield takeLatest(deleteGifReq.toString(), deleteGifSaga);
+  yield takeLatest(getSingleGiffReq.toString(), getSingleGiffSaga);
 }
