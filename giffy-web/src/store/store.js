@@ -9,7 +9,7 @@ import rootSaga from './root-saga';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['Auth', 'Gif'],
+  whitelist: ['Auth', 'Gif', 'App'],
   // blacklist: [],
 };
 

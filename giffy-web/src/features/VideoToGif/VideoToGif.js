@@ -87,7 +87,9 @@ function VideoToGif() {
         setVideoStartDuration={setVideoStartDuration}
         setVideoEndDuration={setVideoEndDuration}
         setVideo={setVideo}
+        video={video}
         setBlobString={setBlobString}
+        blobString={blobString}
       />
       {video && (
         <VideoPlayback

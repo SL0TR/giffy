@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Menu, Dropdown, Avatar } from 'antd';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
@@ -17,11 +16,6 @@ export default function TopbarUser() {
 
   const menu = (
     <Menu>
-      <MenuItem key="1">
-        <Link to="/dashboard/settings">
-          <FormattedMessage id="Settings" />
-        </Link>
-      </MenuItem>
       <MenuItem key="2" onClick={() => dispatch(logout())}>
         <FormattedMessage id="Logout" />
       </MenuItem>

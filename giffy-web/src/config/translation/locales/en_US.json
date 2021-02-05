@@ -35,6 +35,21 @@
   "Gif was succesfully uploaded to the cloud!": "Gif was succesfully uploaded to the cloud!",
   "All Gifs": "All Gifs",
   "My GIFs": "My GIFs",
-  "Add Comment": "Add Comment"
-
+  "Add Comment": "Add Comment",
+  "You dont have any GIFs uplaoded, go the converter and upload to see them here!": "You dont have any GIFs uplaoded, go the converter and upload to see them here!",
+  "Convert": "Convert",
+  "Are you sure to delete this GIF?": "Are you sure to delete this GIF?",
+  "Public": "Public",
+  "Private": "Private",
+  "likes": "likes",
+  "comments": "comments",
+  "Uploaded By": "Uploaded By",
+  "Convert and upload again!": "Convert and upload again!",
+  "See all your gifs": "See all your gifs",
+  "Crop GIF": "Crop GIF",
+  "Gif start": "Gif start",
+  "Gif end": "Gif end",
+  "(Max 10s)": "(Max 10s)",
+  "Dont have a video file? Downlod and use the": "Dont have a video file? Downlod and use the",
+  "sample video file": "sample video file"
 }

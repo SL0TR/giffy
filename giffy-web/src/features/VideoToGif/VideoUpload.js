@@ -12,8 +12,11 @@ function VideoUpload({
   setBlobString,
   setVideoStartDuration,
   setVideoEndDuration,
+  video,
+  blobString,
 }) {
   const { messages } = useIntl();
+  console.log(!video && !blobString);
 
   function onVideoUploadChange(info) {
     const { status } = info.file;
@@ -36,7 +39,7 @@ function VideoUpload({
   }
 
   return (
-    <Col span={15}>
+    <Col xl={{ span: 15 }} xs={{ span: 24 }}>
       <Dragger
         showUploadList={false}
         customRequest={customRequest}
@@ -51,6 +54,16 @@ function VideoUpload({
           <FormattedMessage id="Click or drag file to this area to convert video to GIF" />
         </p>
       </Dragger>
+      {!video && !blobString && (
+        <p className="text-center" style={{ marginTop: 20 }}>
+          <FormattedMessage id="Dont have a video file? Downlod and use the" />
+
+          <a href="https://vod-progressive.akamaized.net/exp=1612560437~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F3536%2F18%2F467681707%2F2077383797.mp4~hmac=0581e7635bbda357804ffd7e099d2a0eb56a5f699cbab0a76253e75e7d823771/vimeo-prod-skyfire-std-us/01/3536/18/467681707/2077383797.mp4?download=1&filename=pexels-thirdman-5592438.mp4">
+            {` `}
+            <FormattedMessage id="sample video file" />
+          </a>
+        </p>
+      )}
     </Col>
   );
 }
@@ -60,6 +73,8 @@ VideoUpload.propTypes = {
   setBlobString: PropTypes.func,
   setVideoEndDuration: PropTypes.func,
   setVideoStartDuration: PropTypes.func,
+  video: PropTypes.object,
+  blobString: PropTypes.string,
 };
 
 export default VideoUpload;

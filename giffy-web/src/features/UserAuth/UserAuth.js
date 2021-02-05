@@ -19,6 +19,7 @@ const RowWrapper = styled(Row)`
     box-shadow: ${props => props.theme.lightShadow};
     background-color: #fff;
     border-radius: 0.6rem;
+    margin: 0 2rem;
   }
 `;
 

@@ -17,6 +17,7 @@ import CustomScrollBars from 'components/CustomScroll';
 import { LikeOutlined, LikeFilled, CommentOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
+import { useIntl } from 'react-intl';
 import CommentEditor from './CommentEditor';
 import { getSingleGiffReq, updateGifReq } from './reducer';
 import { toggleLike } from './helper';
@@ -28,6 +29,7 @@ function SingleGifView() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { state } = useLocation();
+  const { messages } = useIntl();
   const theme = useTheme();
   const user = useSelector(reduxState => reduxState.Auth.user);
   const [gif, setGif] = useState();
@@ -55,14 +57,14 @@ function SingleGifView() {
 
   return (
     <Row gutter={40} align="middle">
-      <Col span={14}>
+      <Col xl={{ span: 14 }} xs={{ span: 24 }}>
         <Image width="100%" src={gif?.url} />
       </Col>
-      <Col span={10}>
+      <Col xl={{ span: 10 }} xs={{ span: 24 }} span={10}>
         <Row>
           <Col span={24}>
             <Typography.Paragraph level={4}>
-              {`Uploaded By ${gif?.user?.email}`}
+              {`${messages['Uploaded By']} ${gif?.user?.email}`}
             </Typography.Paragraph>
             <Divider />
           </Col>
@@ -102,11 +104,12 @@ function SingleGifView() {
                   content={<LikeList list={gif?.likes} />}
                   title="Liked by"
                 >
-                  {` ${gif?.likes.length} Likes`}
+                  {` ${gif?.likes.length} ${messages['likes']}`}
                 </Popover>
               </Col>
               <Col>
-                <CommentOutlined /> {gif?.comments.length} Comments
+                <CommentOutlined />{' '}
+                {`${gif?.comments.length} ${messages['comments']}`}
               </Col>
             </Row>
             <Divider />

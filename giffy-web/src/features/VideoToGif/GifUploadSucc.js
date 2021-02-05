@@ -16,10 +16,12 @@ function GifUploadSucc({ setUploadSuccess }) {
       extra={
         <>
           <Button type="primary" onClick={() => setUploadSuccess(false)}>
-            Convert and upload again!
+            <FormattedMessage id="Convert and upload again!" />
           </Button>
           <Link to={PRIVATE_ROUTE.MY_GIFS}>
-            <Button type="ghost">See all your gifs</Button>
+            <Button type="ghost">
+              <FormattedMessage id="See all your gifs" />
+            </Button>
           </Link>
         </>
       }

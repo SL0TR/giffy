@@ -37,7 +37,7 @@ function CommentEditor({ gif, setGif, sentFrom, index }) {
 
   return (
     <Row gutter={20}>
-      <Col span={18}>
+      <Col xl={{ span: 18 }} xs={{ span: 24 }}>
         <TextArea
           rows={2}
           value={comment}

@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Row, Col, Switch, Popconfirm } from 'antd';
 import {
   DeleteOutlined,
+  DownloadOutlined,
   LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
@@ -12,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { PRIVATE_ROUTE } from 'router';
+import { FormattedMessage } from 'react-intl';
 import { deleteGifReq, updateGifReq } from './reducer';
 import { toggleLike } from './helper';
 
@@ -30,6 +32,12 @@ function SingleGifCard({ gif, isPublic, index }) {
       rel="noreferrer"
     >
       <ShareAltOutlined key="share" />
+    </a>
+  );
+
+  const downloadBtn = (
+    <a href={gif.url} download="downloaded">
+      <DownloadOutlined key="download" />
     </a>
   );
 
@@ -73,12 +81,13 @@ function SingleGifCard({ gif, isPublic, index }) {
         ) : (
           <LikeOutlined onClick={onLikeChange} />
         ),
+        downloadBtn,
         shareBtn,
       ]
     : [
         shareBtn,
         <Popconfirm
-          title="Are you sure to delete this GIF?"
+          title={<FormattedMessage id="Are you sure to delete this GIF?" />}
           onConfirm={confirm}
         >
           <DeleteOutlined key="delete" />
@@ -86,13 +95,13 @@ function SingleGifCard({ gif, isPublic, index }) {
         <Switch
           onChange={handleSwitchChange}
           checked={gif?.isPublic}
-          checkedChildren="Public"
-          unCheckedChildren="Private"
+          checkedChildren={<FormattedMessage id="Public" />}
+          unCheckedChildren={<FormattedMessage id="Private" />}
         />,
       ];
 
   return (
-    <Col span={8}>
+    <Col xl={{ span: 12 }} xxl={{ span: 8 }} xs={{ span: 24 }}>
       <Card
         cover={
           <Link
@@ -113,10 +122,16 @@ function SingleGifCard({ gif, isPublic, index }) {
           description={
             <Row>
               <Col span={12} align="middle">
-                <p>{`${gif?.likes.length} likes`}</p>
+                <p>
+                  {`${gif?.likes.length} `}
+                  <FormattedMessage id="likes" />
+                </p>
               </Col>
               <Col span={12} align="middle">
-                <p>{`${gif?.comments.length} comments`}</p>
+                <p>
+                  {`${gif?.comments.length} `}
+                  <FormattedMessage id="comments" />
+                </p>
               </Col>
             </Row>
           }

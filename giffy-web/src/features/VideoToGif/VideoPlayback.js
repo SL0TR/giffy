@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Slider, Col, Typography, Row } from 'antd';
+import { FormattedMessage } from 'react-intl';
 
 function VideoPlayback({
   video,
@@ -40,7 +41,12 @@ function VideoPlayback({
 
   return (
     <>
-      <Col ref={vidContainerRef} span={15} align="middle">
+      <Col
+        ref={vidContainerRef}
+        xl={{ span: 15 }}
+        xs={{ span: 24 }}
+        align="middle"
+      >
         <video
           controls
           height={vidContainerHeight}
@@ -49,8 +55,10 @@ function VideoPlayback({
         />
       </Col>
       {videoDuration && (
-        <Col span={15} align="middle">
-          <Typography.Title level={4}>Crop GIF</Typography.Title>
+        <Col xl={{ span: 15 }} xs={{ span: 24 }} align="middle">
+          <Typography.Title level={4}>
+            <FormattedMessage id="Crop GIF" />
+          </Typography.Title>
           <Slider
             value={[videoStartDuration, videoEndDuration || videoDuration]}
             onChange={handleSlideChange}
@@ -62,14 +70,17 @@ function VideoPlayback({
           <Row justify="space-between">
             <Col>
               <Typography.Paragraph>
-                {`Gif start: ${videoStartDuration || '0'}s`}
+                <FormattedMessage id="Gif start" />
+                {`: ${videoStartDuration || '0'}s`}
               </Typography.Paragraph>
             </Col>
             <Col>
               <Typography.Paragraph>
-                {`Gif end: ${
+                <FormattedMessage id="Gif end" />
+                {`: ${
                   videoEndDuration || (videoDuration <= 10 ? videoDuration : 10)
-                }s (Max 10s)`}
+                }s `}
+                <FormattedMessage id="(Max 10s)" />
               </Typography.Paragraph>
             </Col>
           </Row>

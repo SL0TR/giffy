@@ -26,7 +26,7 @@ function Gif({ blobString, blob, setUploadSuccess, uploadSuccess }) {
 
   return (
     <>
-      <Col span={10} align="middle">
+      <Col xl={{ span: 10 }} xs={{ span: 24 }} align="middle">
         <img src={blobString} width="100%" alt="converted gif" />
       </Col>
       <Col span={24} align="middle">
