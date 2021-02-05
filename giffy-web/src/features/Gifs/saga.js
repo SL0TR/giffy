@@ -42,6 +42,7 @@ export function* updateGifSaga({
   console.log({ reqData, index, sentFrom, nestedLikes });
 
   if (sentFrom && (index !== null || index !== undefined)) {
+    console.log('ran here 1');
     yield put(
       updateGif({
         sentFrom,
@@ -62,10 +63,14 @@ export function* updateGifSaga({
             },
       );
     }
+    console.log('ran here 2');
   }
   const { data } = yield call(GifApi.update, reqData, id);
+  console.log('ran here 3');
 
   if (data?.success) {
+    console.log('ran here 4');
+
     yield call(getMyGifsSaga);
     yield call(getAllGifsSaga);
     if (setGif) {
