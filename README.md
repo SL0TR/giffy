@@ -1,11 +1,10 @@
 
 <p align="center">
 <br>
-  <img src="https://seeklogo.com/images/W/webassembly-logo-7640A403C1-seeklogo.com.png" alt="React Dashboard Boilerplate" width="200">
   <br>
   <br>
   <img src="https://res.cloudinary.com/sl0tr/image/upload/v1612551894/giffy/ftanf3nhd3nmbvsp2awh.gif" width="100%">
-  <em>The GIF above was generted by  <a href="http://giffyy.netlify.app/" target="_blank" rel="noopener">Giffy</a> :mind_blown: </em>
+  <em>The GIF above was generted by  <a href="http://giffyy.netlify.app/" target="_blank" rel="noopener">Giffy</a></em>
 </p>
 <h1 align="center">
   <br>
