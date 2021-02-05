@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { message } from 'antd';
 import { store } from 'store';
+import { logout } from 'features/UserAuth';
 
 const http = axios.create({
   headers: {
@@ -24,6 +25,10 @@ http.interceptors.request.use(config => {
 });
 
 http.interceptors.response.use(null, error => {
+  if (error?.response?.status === 401) {
+    store.dispatch(logout());
+  }
+
   if (error?.response?.message) {
     message.error(error.response.message);
     return { error };

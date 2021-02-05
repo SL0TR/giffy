@@ -64,14 +64,14 @@ async function signIn(user) {
 
     if (!existingUser) {
       return {
-        statusCode: StatusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.FORBIDDEN,
         data: { message: "User does't exist!" },
       };
     }
 
     if (!existingUser.authenticate(password)) {
       return {
-        statusCode: StatusCodes.UNAUTHORIZED,
+        statusCode: StatusCodes.FORBIDDEN,
         data: { message: 'Wrong Password!' },
       };
     }

@@ -20,12 +20,22 @@ function Gifs({ isPublic = true }) {
   return (
     <Row gutter={[20, 40]}>
       {isPublic &&
-        allGifs.map(gif => (
-          <SingleGifCard key={gif?._id} gif={gif} isPublic={isPublic} />
+        allGifs.map((gif, index) => (
+          <SingleGifCard
+            index={index}
+            key={gif?._id}
+            gif={gif}
+            isPublic={isPublic}
+          />
         ))}
       {!isPublic &&
-        myGifs.map(gif => (
-          <SingleGifCard key={gif?._id} gif={gif} isPublic={isPublic} />
+        myGifs.map((gif, index) => (
+          <SingleGifCard
+            index={index}
+            key={gif?._id}
+            gif={gif}
+            isPublic={isPublic}
+          />
         ))}
     </Row>
   );

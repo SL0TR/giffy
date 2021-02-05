@@ -17,7 +17,7 @@ import { toggleLike } from './helper';
 
 const { Meta } = Card;
 
-function SingleGifCard({ gif, isPublic }) {
+function SingleGifCard({ gif, isPublic, index }) {
   const dispatch = useDispatch();
   const userId = useSelector(reduxState => reduxState.Auth.user?._id);
   const theme = useTheme();
@@ -40,12 +40,26 @@ function SingleGifCard({ gif, isPublic }) {
         reqData: {
           isPublic: val,
         },
+        sentFrom: isPublic ? 'allGifs' : 'myGifs',
+        index,
       }),
     );
   }
 
+  function onLikeChange() {
+    toggleLike({
+      dispatch,
+      updateGifReq,
+      gif,
+      user: { _id: userId },
+      hasUserLikedGif,
+      sentFrom: isPublic ? 'allGifs' : 'myGifs',
+      index,
+    });
+  }
+
   function confirm() {
-    dispatch(deleteGifReq(gif?._id));
+    dispatch(deleteGifReq({ id: gif?._id, index }));
   }
 
   const actions = isPublic
@@ -53,29 +67,11 @@ function SingleGifCard({ gif, isPublic }) {
         hasUserLikedGif ? (
           <LikeFilled
             style={{ color: theme.accent }}
-            onClick={() =>
-              toggleLike({
-                dispatch,
-                updateGifReq,
-                gif,
-                userId,
-                hasUserLikedGif,
-              })
-            }
+            onClick={onLikeChange}
             key="like"
           />
         ) : (
-          <LikeOutlined
-            onClick={() =>
-              toggleLike({
-                dispatch,
-                updateGifReq,
-                gif,
-                userId,
-                hasUserLikedGif,
-              })
-            }
-          />
+          <LikeOutlined onClick={onLikeChange} />
         ),
         shareBtn,
       ]
@@ -99,7 +95,15 @@ function SingleGifCard({ gif, isPublic }) {
     <Col span={8}>
       <Card
         cover={
-          <Link to={`/${PRIVATE_ROUTE.DASHBOARD}/${gif?._id}`}>
+          <Link
+            to={{
+              pathname: `/${PRIVATE_ROUTE.DASHBOARD}/${gif?._id}`,
+              state: {
+                sentFrom: isPublic ? 'allGifs' : 'myGifs',
+                index,
+              },
+            }}
+          >
             <img alt="gif" width="100%" src={gif?.url} />
           </Link>
         }
@@ -125,6 +129,7 @@ function SingleGifCard({ gif, isPublic }) {
 SingleGifCard.propTypes = {
   gif: PropTypes.object,
   isPublic: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 export default SingleGifCard;

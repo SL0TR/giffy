@@ -8,6 +8,8 @@ import {
   updateGifReq,
   deleteGifReq,
   getSingleGiffReq,
+  updateGif,
+  deleteGif,
 } from './reducer';
 
 export function* getMyGifsSaga() {
@@ -34,10 +36,37 @@ export function* getSingleGiffSaga({ payload: { setGif, id } }) {
   }
 }
 
-export function* updateGifSaga({ payload: { reqData, id, setGif } }) {
+export function* updateGifSaga({
+  payload: { reqData, id, setGif, sentFrom, index, nestedLikes },
+}) {
+  console.log({ reqData, index, sentFrom, nestedLikes });
   const { data } = yield call(GifApi.update, reqData, id);
 
   if (data?.success) {
+    if (sentFrom && (index !== null || index !== undefined)) {
+      yield put(
+        updateGif({
+          sentFrom,
+          index,
+          update: reqData,
+        }),
+      );
+      if (setGif) {
+        setGif(prevState => {
+          if (reqData?.likes) {
+            return {
+              ...prevState,
+              likes: nestedLikes,
+            };
+          }
+
+          return {
+            ...prevState,
+            ...reqData,
+          };
+        });
+      }
+    }
     yield call(getMyGifsSaga);
     yield call(getAllGifsSaga);
     if (setGif) {
@@ -46,10 +75,13 @@ export function* updateGifSaga({ payload: { reqData, id, setGif } }) {
   }
 }
 
-export function* deleteGifSaga({ payload }) {
-  const { data } = yield call(GifApi.delete, payload);
+export function* deleteGifSaga({ payload: { id, index } }) {
+  const { data } = yield call(GifApi.delete, id);
 
   if (data?.success) {
+    if (index !== null || index !== undefined) {
+      yield put(deleteGif(index));
+    }
     yield call(getMyGifsSaga);
     yield call(getAllGifsSaga);
   }

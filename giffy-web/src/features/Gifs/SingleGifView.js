@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import {
   Col,
   Divider,
@@ -27,21 +27,25 @@ dayjs.extend(relativeTime);
 function SingleGifView() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { state } = useLocation();
   const theme = useTheme();
-  const userId = useSelector(reduxState => reduxState.Auth.user?._id);
+  const user = useSelector(reduxState => reduxState.Auth.user);
   const [gif, setGif] = useState();
 
-  const hasUserLikedGif = gif && gif.likes.some(like => like?._id === userId);
+  const hasUserLikedGif =
+    gif && gif.likes.some(like => like?._id === user?._id);
 
   function onLikeChange() {
     toggleLike({
       dispatch,
       updateGifReq,
       gif,
-      userId,
+      user,
       hasUserLikedGif,
       nestedIds: true,
       setGif,
+      sentFrom: state?.sentFrom,
+      index: state?.index,
     });
   }
 
@@ -66,7 +70,7 @@ function SingleGifView() {
             <Col span={24}>
               {gif?.comments.map(comment => (
                 <Comment
-                  key={comment?._id}
+                  key={comment?._id || comment?.user}
                   author={comment?.user?.email}
                   content={<Typography.Text>{comment?.text}</Typography.Text>}
                   datetime={
@@ -106,7 +110,16 @@ function SingleGifView() {
               </Col>
             </Row>
             <Divider />
-            <Comment content={<CommentEditor gif={gif} setGif={setGif} />} />
+            <Comment
+              content={
+                <CommentEditor
+                  gif={gif}
+                  sentFrom={state?.sentFrom}
+                  setGif={setGif}
+                  index={state?.index}
+                />
+              }
+            />
           </Col>
         </Row>
       </Col>

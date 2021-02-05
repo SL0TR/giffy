@@ -15,6 +15,15 @@ const GifSlice = createSlice({
     getAllGifs(state, { payload }) {
       state.allGifs = payload;
     },
+    updateGif(state, { payload: { sentFrom, index, update } }) {
+      state[sentFrom][index] = {
+        ...state[sentFrom][index],
+        ...update,
+      };
+    },
+    deleteGif(state, { payload }) {
+      state.myGifs.splice(payload, 1);
+    },
   },
 });
 
@@ -25,6 +34,6 @@ export const updateGifReq = createAction('gif/updateGifReq');
 export const deleteGifReq = createAction('gif/deleteGifReq');
 export const getSingleGiffReq = createAction('gif/getSingleGiffReq');
 
-export const { getAllGifs, getMyGifs } = GifSlice.actions;
+export const { getAllGifs, getMyGifs, updateGif, deleteGif } = GifSlice.actions;
 
 export default GifSlice;
