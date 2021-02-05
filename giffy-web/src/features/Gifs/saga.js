@@ -40,7 +40,6 @@ export function* updateGifSaga({
   payload: { reqData, id, setGif, sentFrom, index, nestedLikes },
 }) {
   console.log({ reqData, index, sentFrom, nestedLikes });
-  const { data } = yield call(GifApi.update, reqData, id);
 
   if (sentFrom && (index !== null || index !== undefined)) {
     yield put(
@@ -64,6 +63,7 @@ export function* updateGifSaga({
       );
     }
   }
+  const { data } = yield call(GifApi.update, reqData, id);
 
   if (data?.success) {
     yield call(getMyGifsSaga);
@@ -75,10 +75,12 @@ export function* updateGifSaga({
 }
 
 export function* deleteGifSaga({ payload: { id, index } }) {
-  const { data } = yield call(GifApi.delete, id);
   if (index !== null || index !== undefined) {
     yield put(deleteGif(index));
   }
+
+  const { data } = yield call(GifApi.delete, id);
+
   if (data?.success) {
     yield call(getMyGifsSaga);
     yield call(getAllGifsSaga);
