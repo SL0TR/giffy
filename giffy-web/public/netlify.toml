@@ -1,6 +1,6 @@
 # netlify.toml
 [[headers]]
-    for = "/*"
+    for = "/dashboard/vid-to-gif"
     [headers.values]
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Embedder-Policy = "require-corp"
