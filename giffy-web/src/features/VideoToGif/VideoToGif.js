@@ -23,13 +23,12 @@ function VideoToGif() {
 
   const loadFFmpeg = async () => {
     try {
-       await ffmpeg.load();
-       setIsFFmpegLoaded(true);
+      await ffmpeg.load();
+      setIsFFmpegLoaded(true);
     } catch (err) {
       setHasWasmError(true);
     }
   };
-
 
   async function convertToGif() {
     setConverting(true);
@@ -79,15 +78,15 @@ function VideoToGif() {
     }
   }, [uploadSuccess]);
 
-  if(hasWasmError) {
-    return  <Result
-      status="500"
-      title="Error"
-      subTitle="Sorry, WebAssembly is not supported in your browser."
-    />
-    
+  if (hasWasmError) {
+    return (
+      <Result
+        status="500"
+        title="Error"
+        subTitle="Sorry, WebAssembly is not supported in your browser."
+      />
+    );
   }
-
 
   if (!isFFmpegLoaded) {
     return <Loader />;
@@ -96,7 +95,6 @@ function VideoToGif() {
   if (uploadSuccess) {
     return <GifUploadSucc setUploadSuccess={setUploadSuccess} />;
   }
-
 
   return (
     <Row gutter={[20, 20]} align="middle" justify="center">
