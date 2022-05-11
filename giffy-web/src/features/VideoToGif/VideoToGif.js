@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Result } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import Loader from './Loader';
 import VideoPlayback from './VideoPlayback';
@@ -12,6 +12,7 @@ const ffmpeg = createFFmpeg({ log: true });
 
 function VideoToGif() {
   const [isFFmpegLoaded, setIsFFmpegLoaded] = useState(false);
+  const [hasWasmError, setHasWasmError] = useState(false);
   const [video, setVideo] = useState();
   const [converting, setConverting] = useState(false);
   const [blob, setBlob] = useState();
@@ -21,9 +22,14 @@ function VideoToGif() {
   const [videoEndDuration, setVideoEndDuration] = useState();
 
   const loadFFmpeg = async () => {
-    await ffmpeg.load();
-    setIsFFmpegLoaded(true);
+    try {
+       await ffmpeg.load();
+       setIsFFmpegLoaded(true);
+    } catch (err) {
+      setHasWasmError(true);
+    }
   };
+
 
   async function convertToGif() {
     setConverting(true);
@@ -73,6 +79,16 @@ function VideoToGif() {
     }
   }, [uploadSuccess]);
 
+  if(hasWasmError) {
+    return  <Result
+      status="500"
+      title="Error"
+      subTitle="Sorry, WebAssembly is not supported in your browser."
+    />
+    
+  }
+
+
   if (!isFFmpegLoaded) {
     return <Loader />;
   }
@@ -80,6 +96,7 @@ function VideoToGif() {
   if (uploadSuccess) {
     return <GifUploadSucc setUploadSuccess={setUploadSuccess} />;
   }
+
 
   return (
     <Row gutter={[20, 20]} align="middle" justify="center">
