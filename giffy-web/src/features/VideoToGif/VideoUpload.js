@@ -58,9 +58,9 @@ function VideoUpload({
         <p className="text-center" style={{ marginTop: 20 }}>
           <FormattedMessage id="Dont have a video file? Downlod and use the" />
 
-          <a href="https://vod-progressive.akamaized.net/exp=1612560437~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F3536%2F18%2F467681707%2F2077383797.mp4~hmac=0581e7635bbda357804ffd7e099d2a0eb56a5f699cbab0a76253e75e7d823771/vimeo-prod-skyfire-std-us/01/3536/18/467681707/2077383797.mp4?download=1&filename=pexels-thirdman-5592438.mp4">
+          <a href="https://drive.google.com/drive/folders/1pzLhWimFEIVfEY5I9sQrnL4fV66ugnTu?usp=sharing">
             {` `}
-            <FormattedMessage id="sample video file" />
+            <FormattedMessage id="sample video files" />
           </a>
         </p>
       )}

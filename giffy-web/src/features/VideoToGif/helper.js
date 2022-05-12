@@ -14,10 +14,10 @@ export function getValidVideoFile(file, messages = {}) {
   }
 
   // Max filesize 5MB
-  const isSizeValid = file.size / 1024 / 1024 < 5;
+  const isSizeValid = file.size / 1024 / 1024 < 10;
 
   if (!isSizeValid) {
-    message.error(messages['Video must smaller than 5MB!']);
+    message.error(messages['Video must smaller than 10MB!']);
   }
   return isVideoFile && isSizeValid;
 }
