@@ -26,11 +26,13 @@ http.interceptors.request.use(config => {
 
 http.interceptors.response.use(null, error => {
   if (error?.response?.status === 401) {
+    message.error(error.response.data?.message || 'Unauthorized');
     store.dispatch(logout());
+    return { error };
   }
 
-  if (error?.response?.message) {
-    message.error(error.response.message);
+  if (error?.response?.data?.message) {
+    message.error(error.response.data.message);
     return { error };
   }
 

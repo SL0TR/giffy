@@ -65,7 +65,11 @@ function UserAuth() {
             onClick={() => setIsRegistering(!isRegistering)}
             type="link"
           >
-            <FormattedMessage id="Don't have an account?" />
+            {isRegistering ? (
+              <FormattedMessage id="Login" />
+            ) : (
+              <FormattedMessage id="Don't have an account?" />
+            )}
           </Button>
         </Row>
       </div>
