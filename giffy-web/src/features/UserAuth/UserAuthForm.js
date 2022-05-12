@@ -51,6 +51,7 @@ function UserAuthForm({ isRegistering }) {
           { required: true },
           {
             min: 4,
+            max: 4,
           },
         ]}
         hasFeedback
@@ -68,6 +69,7 @@ function UserAuthForm({ isRegistering }) {
             },
             {
               min: 4,
+              max: 4,
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
